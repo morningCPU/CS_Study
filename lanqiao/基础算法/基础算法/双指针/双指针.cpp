@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int N = 2e4;
-int a[N];
-int f[N];
+using ll = long long;
+const int N = 200010;
+ll a[N], b[N];
 int main()
 {
     int n, m, k;
@@ -10,26 +10,21 @@ int main()
     for (int i = 1; i <= n; ++i)
     {
         cin >> a[i];
-        if (a[i] >= k)
-            a[i] = 1;
-        else
-            a[i] = 0;
+        a[i] += a[i - 1];
     }
-    for (int i = 1; i <= n; ++i)
+    for (int i = 1; i <= m; ++i)
     {
-        f[i] = f[i - 1] + a[i];
+        cin >> b[i];
+        b[i] += b[i - 1];
     }
-    int count = 0;
-    for (int l = 1, r = 1; l <= n && r <= n && l <= r;)
+    int ans = 0;
+    for (int i = 0; i <= n; ++i)
     {
-        if (f[r] - f[l - 1] < k)
-            r++;
-        else
-        {
-            count += n - r + 1;
-            l++;
-        }
+        if (a[i] > k)
+            break;
+        int x = upper_bound(b, b + m + 1, k - a[i]) - (b + 1);
+        ans = max(ans, i + x);
     }
-    cout << count;
+    cout << ans << '\n';
     return 0;
 }
