@@ -1,0 +1,6 @@
+函数提高
++   函数可以有默认参数
+    int f(int a = 1,int b = 2)
+    {
+        return a + b;
+    }
